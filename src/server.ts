@@ -19,6 +19,14 @@ import { initEventListener } from './utils/eventListener';
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
+// Enable trust proxy for Render load balancers
+app.set('trust proxy', 1);
+
+// Diagnostic route - Visit this URL in your browser to verify backend is up
+app.get('/', (req: Request, res: Response) => {
+    res.json({ message: "SecureTransfer API is alive", version: "1.0.0" });
+});
+
 // Request logger
 app.use((req: Request, res: Response, next: NextFunction) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
